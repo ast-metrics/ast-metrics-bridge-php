@@ -2,3 +2,5 @@ composer.phar
 /vendor/
 .ast-metrics-cache
 .idea
+# Migration checklist, local only
+todo.md

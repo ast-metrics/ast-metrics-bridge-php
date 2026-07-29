@@ -1,5 +1,5 @@
 {
-    "name": "halleck45/ast-metrics",
+    "name": "ast-metrics/ast-metrics",
     "description": "AST Metrics bridge for PHP: multi-language maintainability metrics, as a Composer-installed tool",
     "type": "library",
     "license": "MIT",
@@ -34,6 +34,9 @@
     "require": {
         "ext-json": "*",
         "php": ">=7.0"
+    },
+    "replace": {
+        "halleck45/ast-metrics": "*"
     },
     "scripts": {
         "test": "php tests/run.php"

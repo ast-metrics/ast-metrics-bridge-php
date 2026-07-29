@@ -5,9 +5,15 @@ installed and versioned like any other Composer tool. No PHP extension, no
 runtime dependency: the analyzer is a single binary, downloaded once and cached.
 
 ```bash
-composer require --dev halleck45/ast-metrics
+composer require --dev ast-metrics/ast-metrics
 php vendor/bin/ast-metrics analyze src
 ```
+
+> This package used to be called `halleck45/ast-metrics`. That name still resolves
+> and still installs this code, so nothing breaks, but it will not receive new
+> versions. To move over: `composer remove halleck45/ast-metrics` then
+> `composer require --dev ast-metrics/ast-metrics`. The command you run is
+> unchanged.
 
 ## Coming from PhpMetrics
 

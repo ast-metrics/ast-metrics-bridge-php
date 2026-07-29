@@ -35,9 +35,6 @@
         "ext-json": "*",
         "php": ">=7.0"
     },
-    "replace": {
-        "halleck45/ast-metrics": "*"
-    },
     "scripts": {
         "test": "php tests/run.php"
     },

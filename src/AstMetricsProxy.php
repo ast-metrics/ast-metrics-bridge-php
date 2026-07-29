@@ -116,9 +116,17 @@ class AstMetricsProxy
      */
     private function reportTranslation(array $notices)
     {
-        foreach ($notices as $notice) {
-            $this->write('warning: ' . $notice);
+        if ($notices === []) {
+            return;
         }
+
+        foreach ($notices as $notice) {
+            $this->write('[!] ' . $notice);
+        }
+
+        // Blank line: the warnings are about the command line, what follows is
+        // the analysis.
+        $this->write('');
     }
 
     /**

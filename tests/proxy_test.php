@@ -143,8 +143,14 @@ assertSame(
     count(array_filter(explode(PHP_EOL, trim($output))))
 );
 assertTrue(
-    'the warning names the compatibility mode and the preferred form',
-    strpos($output, 'PhpMetrics compatibility') !== false && strpos($output, 'ast-metrics analyze .') !== false
+    'the warning is marked and names the compatibility mode and the preferred form',
+    strpos($output, '[!] no subcommand given') === 0
+        && strpos($output, 'PhpMetrics compatibility') !== false
+        && strpos($output, 'ast-metrics analyze .') !== false
+);
+assertTrue(
+    'the warnings are separated from the analysis by a blank line',
+    substr($output, -strlen(PHP_EOL . PHP_EOL)) === PHP_EOL . PHP_EOL
 );
 
 list($runner, $output) = runProxy(['--report-violations=build/pmd.xml', 'src']);

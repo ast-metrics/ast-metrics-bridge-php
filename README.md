@@ -17,10 +17,10 @@ options and translates them, then tells you what it did:
 ```bash
 $ php vendor/bin/ast-metrics --report-html=./report --extensions=php,inc --exclude=tests,vendor src,lib
 
-warning: --extensions became --php-extensions=.inc
-warning: --exclude became --exclude=tests --exclude=vendor
-warning: no subcommand given, assuming "analyze" for PhpMetrics compatibility. Prefer: ast-metrics analyze src lib
-warning: the directory list became separate arguments: src lib
+[!] --extensions became --php-extensions=.inc
+[!] --exclude became --exclude=tests --exclude=vendor
+[!] no subcommand given, assuming "analyze" for PhpMetrics compatibility. Prefer: ast-metrics analyze src lib
+[!] the directory list became separate arguments: src lib
 ```
 
 One line per rewrite, on stderr, and nothing at all when there was nothing to

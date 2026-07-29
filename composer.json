@@ -1,8 +1,22 @@
 {
     "name": "halleck45/ast-metrics",
-    "description": "AST Metrics bridge for PHP",
+    "description": "AST Metrics bridge for PHP: multi-language maintainability metrics, as a Composer-installed tool",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "static analysis",
+        "metrics",
+        "complexity",
+        "maintainability",
+        "phpmetrics",
+        "quality"
+    ],
+    "homepage": "https://ast-metrics.dev",
+    "support": {
+        "issues": "https://github.com/ast-metrics/ast-metrics-bridge-php/issues",
+        "source": "https://github.com/ast-metrics/ast-metrics-bridge-php",
+        "docs": "https://ast-metrics.dev"
+    },
     "autoload": {
         "psr-4": {
             "Halleck45\\AstMetrics\\": "src/"
@@ -18,7 +32,13 @@
         }
     ],
     "require": {
-      "ext-json": "*",
-      "php": ">=7.0"
+        "ext-json": "*",
+        "php": ">=7.0"
+    },
+    "scripts": {
+        "test": "php tests/run.php"
+    },
+    "scripts-descriptions": {
+        "test": "Run the test suite (no dependency required)"
     }
 }

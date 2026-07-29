@@ -1,22 +1,27 @@
+#!/usr/bin/env php
 <?php
 
-if(isset($GLOBALS['_composer_bin_dir'])) {
-    // loaded from composer installed package
+if (isset($GLOBALS['_composer_autoload_path'])) {
+    // Composer 2.2 and later expose the autoloader path to binaries.
+    require_once $GLOBALS['_composer_autoload_path'];
+} elseif (isset($GLOBALS['_composer_bin_dir'])) {
+    // Older Composer releases.
     require_once $GLOBALS['_composer_bin_dir'] . '/../autoload.php';
 } else {
-    // loaded when cloned from git
+    // Cloned from git.
     require_once __DIR__ . '/../vendor/autoload.php';
 }
 
 use Halleck45\AstMetrics\AstMetricsProxy;
 
 $arguments = $_SERVER['argv'];
-array_shift($arguments); // Remove script name from arguments
+array_shift($arguments);
 
 try {
-    $proxy = new AstMetricsProxy();
-    $proxy->run($arguments);
-} catch (Throwable $e) {
-    echo $e->getMessage();
+    // The exit code is the analyzer's own: a failed quality gate must fail the
+    // build, and must not be reported as a crash of the bridge.
+    exit(AstMetricsProxy::create()->run($arguments));
+} catch (Throwable $exception) {
+    fwrite(STDERR, $exception->getMessage() . PHP_EOL);
     exit(1);
 }

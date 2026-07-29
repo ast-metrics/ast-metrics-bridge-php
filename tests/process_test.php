@@ -33,10 +33,34 @@ assertThrows(
     }
 );
 
+// proc_open() only reports a missing executable at call time on PHP 8 and
+// later, so the path is checked beforehand. Without that check, PHP 7 returned
+// exit code 127 with no explanation.
 assertThrows(
     'a missing binary is reported with a usable message',
     'Could not start',
     function () use ($runner) {
         $runner->run([__DIR__ . '/does-not-exist']);
     }
+);
+
+if (DIRECTORY_SEPARATOR === '/') {
+    $notExecutable = tempnam(sys_get_temp_dir(), 'ast-metrics-test');
+    chmod($notExecutable, 0644);
+
+    assertThrows(
+        'a file that is not executable names the fix',
+        'chmod +x',
+        function () use ($runner, $notExecutable) {
+            $runner->run([$notExecutable]);
+        }
+    );
+
+    unlink($notExecutable);
+}
+
+assertSame(
+    'a bare name is left to PATH resolution',
+    0,
+    $runner->run(['env', 'true'])
 );

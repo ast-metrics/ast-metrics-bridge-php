@@ -17,16 +17,15 @@ options and translates them, then tells you what it did:
 ```bash
 $ php vendor/bin/ast-metrics --report-html=./report --extensions=php,inc --exclude=tests,vendor src,lib
 
-Reading this as a PhpMetrics command line:
-  --extensions became --php-extensions=.inc.
-  Inserted the "analyze" subcommand: AST Metrics groups its features into subcommands (analyze, lint, ci, review).
-  Split the directory list into separate arguments: src lib.
-
-Equivalent AST Metrics command: ast-metrics analyze --non-interactive --report-html=./report --php-extensions=.inc --exclude=tests --exclude=vendor src lib
+warning: --extensions became --php-extensions=.inc
+warning: --exclude became --exclude=tests --exclude=vendor
+warning: no subcommand given, assuming "analyze" for PhpMetrics compatibility. Prefer: ast-metrics analyze src lib
+warning: the directory list became separate arguments: src lib
 ```
 
-The translation is printed on purpose: the point is to get you running today, and
-to let you migrate the command line when you feel like it.
+One line per rewrite, on stderr, and nothing at all when there was nothing to
+rewrite. Enough to migrate the command line when you feel like it, without a
+banner in front of the report on every run.
 
 It is on by default, and a native command line comes out untouched: nothing is
 rewritten unless it means something to PhpMetrics and not to AST Metrics. An
@@ -128,11 +127,13 @@ Or, more predictably, upgrade this package: `composer update halleck45/ast-metri
 ## Tests
 
 ```bash
-composer install
-php tests/run.php
+make test     # or: php tests/run.php
+make lint     # syntax of every file
+make check    # both
 ```
 
-No test dependency to install: the suite is plain PHP.
+No test dependency to install: the suite is plain PHP, so it runs anywhere the
+package itself does.
 
 ## License
 

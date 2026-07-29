@@ -83,12 +83,11 @@ class AstMetricsProxy
             }
         }
 
-        $arguments = $this->nonInteractive($arguments);
-
         if ($translating) {
-            $this->reportTranslation($this->compatibility->notices(), $arguments);
+            $this->reportTranslation($this->compatibility->notices());
         }
 
+        $arguments = $this->nonInteractive($arguments);
         $command = array_merge([$this->binaries->resolve()], $arguments);
 
         return $this->runner->run($command);
@@ -109,22 +108,17 @@ class AstMetricsProxy
     }
 
     /**
+     * One short line per rewrite, on stderr. The analyzer's own output is what
+     * the reader came for: a banner around it would be in the way, and would be
+     * in the way of every single run.
+     *
      * @param array $notices
-     * @param array $arguments The final arguments, as they will be passed on.
      */
-    private function reportTranslation(array $notices, array $arguments)
+    private function reportTranslation(array $notices)
     {
-        if ($notices === []) {
-            return;
-        }
-
-        $this->write('Reading this as a PhpMetrics command line:');
         foreach ($notices as $notice) {
-            $this->write('  ' . $notice);
+            $this->write('warning: ' . $notice);
         }
-        $this->write('');
-        $this->write('Equivalent AST Metrics command: ast-metrics ' . implode(' ', $arguments));
-        $this->write('');
     }
 
     /**

@@ -41,9 +41,9 @@ class PhpMetricsArguments
      * it or has nothing to switch off. Dropping them changes no result.
      */
     private static $obsolete = [
-        'git' => 'Git history analysis is built in and always on: bus factor, churn and activity are part of the report.',
-        'composer' => 'There is nothing to enable: dependencies are derived from the code itself, and reported as afferent and efferent coupling.',
-        'quiet' => 'The bridge already runs the analyzer non-interactively.',
+        'git' => 'git history analysis is built in and always on (bus factor, churn, activity)',
+        'composer' => 'there is nothing to enable: dependencies are derived from the code, as afferent and efferent coupling',
+        'quiet' => 'the analyzer already runs non-interactively here',
     ];
 
     /**
@@ -151,14 +151,14 @@ class PhpMetricsArguments
 
         if (!$hasSubcommand) {
             array_unshift($translated, 'analyze');
-            $this->notices[] = 'Inserted the "analyze" subcommand: AST Metrics groups its features into subcommands (analyze, lint, ci, review).';
+            $this->notices[] = sprintf(
+                'no subcommand given, assuming "analyze" for PhpMetrics compatibility. Prefer: ast-metrics analyze %s',
+                $paths === [] ? '<paths>' : implode(' ', $paths)
+            );
         }
 
         if (count($paths) > 1) {
-            $this->notices[] = sprintf(
-                'Split the directory list into separate arguments: %s.',
-                implode(' ', $paths)
-            );
+            $this->notices[] = sprintf('the directory list became separate arguments: %s', implode(' ', $paths));
         }
 
         return array_merge($translated, $paths);
@@ -219,7 +219,7 @@ class PhpMetricsArguments
         }
 
         if (count($parts) > 1) {
-            $this->notices[] = sprintf('--exclude became %s.', implode(' ', $options));
+            $this->notices[] = sprintf('--exclude became %s', implode(' ', $options));
         }
 
         return $options;
@@ -255,11 +255,11 @@ class PhpMetricsArguments
         }
 
         if ($extra === []) {
-            $this->notices[] = '--extensions was dropped: .php is parsed by default.';
+            $this->notices[] = '--extensions was dropped: .php is parsed by default';
             return null;
         }
 
-        $this->notices[] = sprintf('--extensions became --php-extensions=%s.', implode(',', $extra));
+        $this->notices[] = sprintf('--extensions became --php-extensions=%s', implode(',', $extra));
 
         return '--php-extensions=' . implode(',', $extra);
     }

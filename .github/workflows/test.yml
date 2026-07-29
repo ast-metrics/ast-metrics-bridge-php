@@ -1,0 +1,33 @@
+# The analyzer's distribute workflow now commits and tags this repository on
+# every release, so nothing here is published by hand any more. That makes a
+# test run on every push the only thing standing between a broken bridge and
+# Packagist.
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The oldest version composer.json claims to support, the one where
+        # proc_open starts taking an array, and the current one. A claim that is
+        # never exercised is a claim waiting to be wrong.
+        php: ["7.0", "7.4", "8.4"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: json
+          coverage: none
+
+      - run: composer install --no-interaction --no-progress
+
+      - run: make check

@@ -39,9 +39,12 @@ Everything else: `php vendor/bin/ast-metrics --help`, or
 Replace `phpmetrics` with `ast-metrics`. Most of the time, that is the whole
 migration:
 
-```diff
-- php vendor/bin/phpmetrics --report-html=./report --exclude=tests,vendor src,lib
-+ php vendor/bin/ast-metrics --report-html=./report --exclude=tests,vendor src,lib
+```bash
+# before
+php vendor/bin/phpmetrics --report-html=./report --exclude=tests,vendor src,lib
+
+# after
+php vendor/bin/ast-metrics --report-html=./report --exclude=tests,vendor src,lib
 ```
 
 Same options, same directory list, same report.

@@ -28,7 +28,7 @@ class BinaryProvider
      * locked composer.lock reproducible: two runs of the same project get the
      * same analyzer, so metrics do not move under your feet.
      */
-    const DEFAULT_VERSION = 'v0.42.0';
+    const DEFAULT_VERSION = 'v0.42.1';
 
     const REPOSITORY = 'ast-metrics/ast-metrics';
 

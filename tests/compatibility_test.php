@@ -52,6 +52,20 @@ assertSame(
     $compatibility->translate(['mcp', '.'])
 );
 
+// A subcommand read as a path turns into "analyze baseline", and the run dies
+// on a directory that does not exist.
+assertSame(
+    'baseline is a subcommand, not a directory to analyze',
+    ['baseline'],
+    $compatibility->translate(['baseline'])
+);
+
+assertSame(
+    'architecture is a subcommand, not a directory to analyze',
+    ['architecture', 'init'],
+    $compatibility->translate(['architecture', 'init'])
+);
+
 // ---------------------------------------------------------------------------
 // Translating a PhpMetrics command line
 // ---------------------------------------------------------------------------

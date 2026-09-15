@@ -49,9 +49,15 @@ class PhpMetricsArguments
     /**
      * Subcommands of the AST Metrics CLI. PhpMetrics has none, so one is
      * injected when the command line does not name any.
+     *
+     * A subcommand missing from this list is read as a directory to analyze,
+     * so the run fails on a path that does not exist. It must be kept in step
+     * with the commands of the binary.
      */
     private static $subcommands = [
         'analyze', 'a',
+        'architecture',
+        'baseline',
         'clean', 'c',
         'self-update', 'u',
         'ruleset',
